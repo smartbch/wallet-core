@@ -1593,5 +1593,29 @@
       "clientPublic": "https://seed.thorchain.info",
       "clientDocs": ""
     }
+  },
+  {
+    "id": "smartbch",
+    "name": "Smart Bitcoin Cash",
+    "coinId": 10000,
+    "symbol": "BCH",
+    "decimals": 18,
+    "blockchain": "Ethereum",
+    "derivationPath": "m/44'/60'/0'/0/0",
+    "curve": "secp256k1",
+    "publicKeyType": "secp256k1Extended",
+    "explorer": {
+      "url": "https://smartbch-explorer.web.app/",
+      "txPath": "/tx/",
+      "accountPath": "/address/",
+      "sampleTx": "0xf455b0c26c1ebaedf80736cc3baab0d49093185cd8e0dd93b566270a36eb228b",
+      "sampleAccount": "0xffce56464b76bea1ef202e99bf56e7bf9ca837db"
+    },
+    "info": {
+      "url": "https://smartbch.org/",
+      "client": "https://github.com/smartbch/smartbch",
+      "clientPublic": "https://moeing.app:9545",
+      "clientDocs": "https://github.com/smartbch/docs/blob/main/developers-guide/jsonrpc.md"
+    }
   }
 ]
