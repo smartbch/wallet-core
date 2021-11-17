@@ -52,6 +52,7 @@
 #include "Waves/Entry.h"
 #include "Zcash/Entry.h"
 #include "Zilliqa/Entry.h"
+#include "SmartBitcoinCash/Entry.h"
 // end_of_coin_includes_marker_do_not_modify
 
 using namespace TW;
@@ -96,6 +97,7 @@ VeChain::Entry vechainDP;
 Waves::Entry wavesDP;
 Zcash::Entry zcashDP;
 Zilliqa::Entry zilliqaDP;
+SmartBitcoinCash::Entry SmartBitcoinCashDP;
 // end_of_coin_dipatcher_declarations_marker_do_not_modify
 
 CoinEntry* coinDispatcher(TWCoinType coinType) {
@@ -178,6 +180,7 @@ CoinEntry* coinDispatcher(TWCoinType coinType) {
         case TWCoinTypeRonin: entry = &ethereumDP; break;
         case TWCoinTypeCryptoOrg: entry = &cosmosDP; break;
         case TWCoinTypeOsmosis: entry = &cosmosDP; break;
+        case TWCoinTypeSmartBitcoinCash: entry = &SmartBitcoinCashDP; break;
         // end_of_coin_dipatcher_switch_marker_do_not_modify
 
         default: entry = nullptr; break;
