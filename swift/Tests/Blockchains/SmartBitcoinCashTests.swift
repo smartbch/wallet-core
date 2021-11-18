@@ -15,7 +15,7 @@ class SmartBitcoinCashTests: XCTestCase {
         let address = AnyAddress(publicKey: pubkey, coin: .smartBitcoinCash)
         let addressFromString = AnyAddress(string: "0xA3Dcd899C0f3832DFDFed9479a9d828c6A4EB2A7", coin: .smartBitcoinCash)!
 
-        XCTAssertEqual(pubkey.data.hexString, "0x0448a9ffac8022f1c7eb5253746e24d11d9b6b2737c0aecd48335feabb95a179916b1f3a97bed6740a85a2d11c663d38566acfb08af48a47ce0c835c65c9b23d0d")
+        XCTAssertEqual(pubkey.data.hexString, "0448a9ffac8022f1c7eb5253746e24d11d9b6b2737c0aecd48335feabb95a179916b1f3a97bed6740a85a2d11c663d38566acfb08af48a47ce0c835c65c9b23d0d")
         XCTAssertEqual(address.description, addressFromString.description)
     }
 
