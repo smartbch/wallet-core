@@ -26,7 +26,7 @@ class TestSmartBitcoinCashAddress {
         val pubkey = key.publicKeyEd25519
         val address = AnyAddress(pubkey, CoinType.SMARTBITCOINCASH)
         val expected = AnyAddress("0xf3d468DBb386aaD46E92FF222adDdf872C8CC064", CoinType.SMARTBITCOINCASH)
-
+println(pubkey.data().toHex())
         assertEquals(pubkey.data().toHex(), "0x__EXPECTED_PUBKEY_DATA__")
         assertEquals(address.description(), expected.description())
     }
