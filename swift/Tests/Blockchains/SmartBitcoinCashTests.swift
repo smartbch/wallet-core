@@ -8,21 +8,15 @@ import WalletCore
 import XCTest
 
 class SmartBitcoinCashTests: XCTestCase {
-    // TODO: Check and finalize implementation
 
     func testAddress() {
-        // TODO: Check and finalize implementation
-
-        let key = PrivateKey(data: Data(hexString: "__PRIVATE_KEY_DATA__")!)!
-        let pubkey = key.getPublicKeyEd25519()
+        let key = PrivateKey(data: Data(hexString: "ab4accc9310d90a61fc354d8f353bca4a2b3c0590685d3eb82d0216af3badddc")!)!
+        let pubkey = key.getPublicKeySecp256k1(compressed: false)
         let address = AnyAddress(publicKey: pubkey, coin: .smartbitcoincash)
-        let addressFromString = AnyAddress(string: "__ADDRESS_DATA__", coin: .smartbitcoincash)!
+        let addressFromString = AnyAddress(string: "0xA3Dcd899C0f3832DFDFed9479a9d828c6A4EB2A7", coin: .smartbitcoincash)!
 
-        XCTAssertEqual(pubkey.data.hexString, "__EXPECTED_PUBKEY_DATA__")
+        XCTAssertEqual(pubkey.data.hexString, "0x0448a9ffac8022f1c7eb5253746e24d11d9b6b2737c0aecd48335feabb95a179916b1f3a97bed6740a85a2d11c663d38566acfb08af48a47ce0c835c65c9b23d0d")
         XCTAssertEqual(address.description, addressFromString.description)
     }
 
-    func testSign() {
-        // TODO: Create implementation
-    }
 }
