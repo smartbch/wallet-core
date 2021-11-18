@@ -22,12 +22,12 @@ class TestSmartBitcoinCashAddress {
     fun testAddress() {
         // TODO: Check and finalize implementation
 
-        val key = PrivateKey("727f677b390c151caf9c206fd77f77918f56904b5504243db9b21e51182c4c06".toHexByteArray())
+        val key = PrivateKey("ab4accc9310d90a61fc354d8f353bca4a2b3c0590685d3eb82d0216af3badddc".toHexByteArray())
         val pubkey = key.publicKeyEd25519
         val address = AnyAddress(pubkey, CoinType.SMARTBITCOINCASH)
-        val expected = AnyAddress("0xf3d468DBb386aaD46E92FF222adDdf872C8CC064", CoinType.SMARTBITCOINCASH)
-println(pubkey.data().toHex())
-        assertEquals(pubkey.data().toHex(), "0x__EXPECTED_PUBKEY_DATA__")
+        val expected = AnyAddress("0xA3Dcd899C0f3832DFDFed9479a9d828c6A4EB2A7", CoinType.SMARTBITCOINCASH)
+
+        assertEquals(pubkey.data().toHex(), "0xcdcd7e3be24a6ae4a364683fa2bc90890ea56d546cdf85e75e0cc20a387c61b5")
         assertEquals(address.description(), expected.description())
     }
 }
