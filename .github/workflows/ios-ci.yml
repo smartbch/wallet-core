@@ -2,7 +2,7 @@ name: iOS CI
 
 on:
   push:
-    branches: [ master, smartbch2 ]
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 
