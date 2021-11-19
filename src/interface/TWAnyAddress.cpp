@@ -161,6 +161,7 @@ TWData* _Nonnull TWAnyAddressData(struct TWAnyAddress* _Nonnull address) {
     case TWCoinTypeAvalancheCChain:
     case TWCoinTypeFantom:
     case TWCoinTypeCelo:
+    case TWCoinTypeSmartBitcoinCash:
         data = parse_hex(string);
         break;
 
