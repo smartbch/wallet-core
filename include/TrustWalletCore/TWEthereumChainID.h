@@ -32,6 +32,7 @@ enum TWEthereumChainID {
     TWEthereumChainIDFantom = 250,
     TWEthereumChainIDCelo = 42220,
     TWEthereumChainIDRonin = 2020,
+    TWEthereumChainIDCronos = 25,
     TWEthereumChainIDSmartBitcoinCash = 10000,
 };
 

@@ -340,7 +340,7 @@
     "publicKeyType": "secp256k1",
     "hrp": "cosmos",
     "explorer": {
-      "url": "https://www.mintscan.io",
+      "url": "https://mintscan.io/cosmos",
       "txPath": "/txs/",
       "accountPath": "/account/"
     },
@@ -381,9 +381,8 @@
     }
   },
   {
-    "id": "zcoin",
-    "name": "Zcoin",
-    "displayName": "Firo",
+    "id": "firo",
+    "name": "Firo",
     "coinId": 136,
     "symbol": "FIRO",
     "decimals": 8,
@@ -517,7 +516,7 @@
     "id": "nano",
     "name": "Nano",
     "coinId": 165,
-    "symbol": "NANO",
+    "symbol": "XNO",
     "decimals": 30,
     "blockchain": "Nano",
     "derivationPath": "m/44'/165'/0'",
@@ -894,7 +893,7 @@
     "publicKeyType": "secp256k1",
     "hrp": "kava",
     "explorer": {
-      "url": "https://kava.mintscan.io",
+      "url": "https://mintscan.io/kava",
       "txPath": "/txs/",
       "accountPath": "/account/",
       "sampleTx": "2988DF83FCBFAA38179D583A96734CBD071541D6768221BB23111BC8136D5E6A",
@@ -1697,6 +1696,7 @@
   {
     "id": "xdai",
     "name": "xDai",
+    "displayName": "Gnosis Chain",
     "coinId": 10000100,
     "symbol": "xDAI",
     "decimals": 18,
@@ -1714,7 +1714,7 @@
     "info": {
       "url": "https://www.xdaichain.com",
       "client": "https://github.com/openethereum/openethereum",
-      "clientPublic": "https://rpc.xdaichain.com",
+      "clientPublic": "https://rpc.gnosischain.com",
       "clientDocs": "https://eth.wiki/json-rpc/API"
     }
   },
@@ -1775,7 +1775,7 @@
     "symbol": "CELO",
     "decimals": 18,
     "blockchain": "Ethereum",
-    "derivationPath": "m/44'/52752'/0'/0/0",
+    "derivationPath": "m/44'/60'/0'/0/0",
     "curve": "secp256k1",
     "publicKeyType": "secp256k1Extended",
     "explorer": {
@@ -1830,7 +1830,7 @@
     "publicKeyType": "secp256k1",
     "hrp": "osmo",
     "explorer": {
-      "url": "https://www.mintscan.io/osmosis",
+      "url": "https://mintscan.io/osmosis",
       "txPath": "/txs/",
       "accountPath": "/account/",
       "sampleTx": "5A6E50A6F2927E4B8C87BB094D5FBF15F1287429A09111806FC44B3CD86CACA8",
@@ -1841,6 +1841,57 @@
       "client": "https://github.com/osmosis-labs/osmosis",
       "clientPublic": "https://rpc-osmosis.keplr.app/",
       "clientDocs": ""
+    }
+  },
+  {
+    "id": "ecash",
+    "name": "ECash",
+    "coinId": 899,
+    "symbol": "XEC",
+    "decimals": 2,
+    "blockchain": "Bitcoin",
+    "derivationPath": "m/44'/899'/0'/0/0",
+    "curve": "secp256k1",
+    "publicKeyType": "secp256k1",
+    "p2pkhPrefix": 0,
+    "p2shPrefix": 5,
+    "hrp": "ecash",
+    "publicKeyHasher": "sha256ripemd",
+    "base58Hasher": "sha256d",
+    "xpub": "xpub",
+    "xprv": "xprv",
+    "explorer": {
+      "url": "https://explorer.bitcoinabc.org",
+      "txPath": "/tx/",
+      "accountPath": "/address/"
+    },
+    "info": {
+      "url": "https://e.cash",
+      "source": "https://github.com/trezor/blockbook",
+      "rpc": "",
+      "documentation": "https://github.com/trezor/blockbook/blob/master/docs/api.md"
+    }
+  },
+  {
+    "id": "cronos",
+    "name": "Cronos Chain",
+    "coinId": 10000025,
+    "symbol": "CRO",
+    "decimals": 18,
+    "blockchain": "Ethereum",
+    "derivationPath": "m/44'/60'/0'/0/0",
+    "curve": "secp256k1",
+    "publicKeyType": "secp256k1Extended",
+    "explorer": {
+      "url": "https://cronoscan.com",
+      "txPath": "/tx/",
+      "accountPath": "/address/"
+    },
+    "info": {
+      "url": "https://cronos.org",
+      "client": "https://github.com/crypto-org-chain/cronos",
+      "clientPublic": "https://evm-cronos.crypto.org",
+      "clientDocs": "https://eth.wiki/json-rpc/API"
     }
   },
   {

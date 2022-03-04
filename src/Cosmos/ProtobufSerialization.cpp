@@ -1,9 +1,10 @@
-// Copyright © 2017-2021 Trust Wallet.
+// Copyright © 2017-2022 Trust Wallet.
 //
 // This file is part of Trust. The full Trust copyright notice, including
 // terms governing use, modification, and redistribution, is contained in the
 // file LICENSE at the root of the source code distribution tree.
 
+#include "ProtobufSerialization.h"
 #include "JsonSerialization.h"
 #include "../proto/Cosmos.pb.h"
 #include "Protobuf/coin.pb.h"
@@ -12,10 +13,16 @@
 #include "Protobuf/staking_tx.pb.h"
 #include "Protobuf/tx.pb.h"
 #include "Protobuf/crypto_secp256k1_keys.pb.h"
+#include "Protobuf/ibc_applications_transfer_tx.pb.h"
+#include "Protobuf/terra_wasm_v1beta1_tx.pb.h"
 
 #include "PrivateKey.h"
 #include "Data.h"
 #include "Hash.h"
+#include "Base64.h"
+#include "uint256.h"
+
+#include <google/protobuf/util/json_util.h>
 
 using namespace TW;
 using namespace TW::Cosmos;
@@ -46,6 +53,23 @@ google::protobuf::Any convertMessage(const Proto::Message& msg) {
                     *msgSend.add_amount() = convertCoin(send.amounts(i));
                 }
                 any.PackFrom(msgSend, ProtobufAnyNamespacePrefix);
+                return any;
+            }
+
+        case Proto::Message::kTransferTokensMessage:
+            {
+                assert(msg.has_transfer_tokens_message());
+                const auto& transfer = msg.transfer_tokens_message();
+                auto msgTransfer = ibc::applications::transfer::v1::MsgTransfer();
+                msgTransfer.set_source_port(transfer.source_port());
+                msgTransfer.set_source_channel(transfer.source_channel());
+                *msgTransfer.mutable_token() = convertCoin(transfer.token());
+                msgTransfer.set_sender(transfer.sender());
+                msgTransfer.set_receiver(transfer.receiver());
+                msgTransfer.mutable_timeout_height()->set_revision_number(transfer.timeout_height().revision_number());
+                msgTransfer.mutable_timeout_height()->set_revision_height(transfer.timeout_height().revision_height());
+                msgTransfer.set_timeout_timestamp(transfer.timeout_timestamp());
+                any.PackFrom(msgTransfer, ProtobufAnyNamespacePrefix);
                 return any;
             }
 
@@ -94,6 +118,32 @@ google::protobuf::Any convertMessage(const Proto::Message& msg) {
                 msgWithdraw.set_delegator_address(withdraw.delegator_address());
                 msgWithdraw.set_validator_address(withdraw.validator_address());
                 any.PackFrom(msgWithdraw, ProtobufAnyNamespacePrefix);
+                return any;
+            }
+
+        case Proto::Message::kWasmTerraExecuteContractTransferMessage:
+            {
+                assert(msg.has_wasm_terra_execute_contract_transfer_message());
+                const auto& wasmExecute = msg.wasm_terra_execute_contract_transfer_message();
+                auto msgExecute = terra::wasm::v1beta1::MsgExecuteContract();
+                msgExecute.set_sender(wasmExecute.sender_address());
+                msgExecute.set_contract(wasmExecute.contract_address());
+                const std::string payload = Cosmos::wasmTerraExecuteTransferPayload(wasmExecute).dump();
+                msgExecute.set_execute_msg(payload);
+                any.PackFrom(msgExecute, ProtobufAnyNamespacePrefix);
+                return any;
+            }
+
+        case Proto::Message::kWasmTerraExecuteContractSendMessage:
+            {
+                assert(msg.has_wasm_terra_execute_contract_send_message());
+                const auto& wasmExecute = msg.wasm_terra_execute_contract_send_message();
+                auto msgExecute = terra::wasm::v1beta1::MsgExecuteContract();
+                msgExecute.set_sender(wasmExecute.sender_address());
+                msgExecute.set_contract(wasmExecute.contract_address());
+                const std::string payload = Cosmos::wasmTerraExecuteSendPayload(wasmExecute).dump();
+                msgExecute.set_execute_msg(payload);
+                any.PackFrom(msgExecute, ProtobufAnyNamespacePrefix);
                 return any;
             }
 
@@ -162,6 +212,49 @@ std::string buildProtoTxRaw(const Proto::SigningInput& input, const std::string&
     txRaw.set_auth_info_bytes(serializedAuthInfo);
     *txRaw.add_signatures() = std::string(signature.begin(), signature.end());
     return txRaw.SerializeAsString();
+}
+
+static string broadcastMode(Proto::BroadcastMode mode) {
+    switch (mode) {
+    case Proto::BroadcastMode::BLOCK:
+        return "BROADCAST_MODE_BLOCK";
+    case Proto::BroadcastMode::ASYNC:
+        return "BROADCAST_MODE_ASYNC";
+    case Proto::BroadcastMode::SYNC:
+    default: return "BROADCAST_MODE_SYNC";
+    }
+}
+
+std::string buildProtoTxJson(const Proto::SigningInput& input, const std::string& serializedTx) {
+    const string serializedBase64 = Base64::encode(TW::data(serializedTx)); 
+    const json jsonSerialized = {
+        {"tx_bytes", serializedBase64},
+        {"mode", broadcastMode(input.mode())}
+    };
+    return jsonSerialized.dump();
+}
+
+json wasmTerraExecuteTransferPayload(const Proto::Message_WasmTerraExecuteContractTransfer& msg) {
+    return {
+        {"transfer",
+            {
+                {"amount", toString(load(data(msg.amount())))},
+                {"recipient", msg.recipient_address()}
+            }
+        }
+    };
+}
+
+json wasmTerraExecuteSendPayload(const Proto::Message_WasmTerraExecuteContractSend& msg) {
+    return {
+        {"send",
+            {
+                {"amount", toString(load(data(msg.amount())))},
+                {"contract", msg.recipient_contract_address()},
+                {"msg", msg.msg()}
+            }
+        }
+    };
 }
 
 } // namespace
