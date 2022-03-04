@@ -2,9 +2,9 @@ name: iOS CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ sbch3a ]
   pull_request:
-    branches: [ master ]
+    branches: [ sbch3a ]
 
 jobs:
   build:
